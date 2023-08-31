@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS-I5
  */
 public class Lista extends javax.swing.JFrame {
+
     private DefaultTableModel modelo = new DefaultTableModel();
 
     /**
@@ -136,28 +137,29 @@ public class Lista extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String cat = (String)jCBcat.getSelectedItem();
+        String cat = (String) jCBcat.getSelectedItem();
         String nombre = jTFnombre.getText();
         double precio = 0;
-        
+
         try {
             precio = Double.parseDouble(jTFprecio.getText());
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido");
+            JOptionPane.showMessageDialog(this, "Ingrese dato válido");
             return;
         }
-        
-        if (nombre.equals("") && (precio>0)) {
+
+        if ((!nombre.equals("")) && (precio > 0)) {
             Object arr[] = {nombre, cat, precio};
             modelo.addRow(arr);
         } else {
             JOptionPane.showMessageDialog(this, "Error, debe ingresar datos");
-            jTFnombre.setText("");
-            jTFprecio.setText("");
+
         }
-        
-        
+        jTFnombre.setText("");
+        jTFprecio.setText("");
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -208,7 +210,7 @@ public class Lista extends javax.swing.JFrame {
     private javax.swing.JTable jTproductos;
     // End of variables declaration//GEN-END:variables
 
-    private void armarCabecera(){
+    private void armarCabecera() {
         modelo.addColumn("Nombre");
         modelo.addColumn("Precio");
         modelo.addColumn("Categoria");
