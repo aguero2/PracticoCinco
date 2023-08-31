@@ -5,17 +5,22 @@
  */
 package practicocinco.vistas;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ASUS-I5
  */
 public class Lista extends javax.swing.JFrame {
+    private DefaultTableModel modelo = new DefaultTableModel();
 
     /**
      * Creates new form Lista
      */
     public Lista() {
         initComponents();
+        armarCabecera();
     }
 
     /**
@@ -36,7 +41,7 @@ public class Lista extends javax.swing.JFrame {
         jTFnombre = new javax.swing.JTextField();
         jTFprecio = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTproductos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,10 +55,15 @@ public class Lista extends javax.swing.JFrame {
         jLabel4.setText("Precio");
 
         jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jCBcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ropa", "Electrodomestico", "Alimentos", "etc" }));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTproductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,7 +74,7 @@ public class Lista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTproductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,6 +134,32 @@ public class Lista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String cat = (String)jCBcat.getSelectedItem();
+        String nombre = jTFnombre.getText();
+        double precio = 0;
+        
+        try {
+            precio = Double.parseDouble(jTFprecio.getText());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido");
+            return;
+        }
+        
+        if (nombre.equals("") && (precio>0)) {
+            Object arr[] = {nombre, cat, precio};
+            modelo.addRow(arr);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error, debe ingresar datos");
+            jTFnombre.setText("");
+            jTFprecio.setText("");
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -169,6 +205,14 @@ public class Lista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTFnombre;
     private javax.swing.JTextField jTFprecio;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTproductos;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCabecera(){
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Categoria");
+        jTproductos.setModel(modelo);
+    }
+
 }
